@@ -11,8 +11,8 @@ def main(record=False):
 
     vid = cv2.VideoCapture(0)
     if record:
-        fourcc = cv2.VideoWriter_fourcc(*'XVID')
-        out = cv2.VideoWriter('output.avi', fourcc, 20.0, (640, 480))
+        fourcc = cv2.VideoWriter_fourcc(*'mov')
+        out = cv2.VideoWriter('output.mov', fourcc, 20.0, (640, 480))
 
     if not vid.isOpened():
         print("not opened")
