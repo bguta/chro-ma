@@ -1,6 +1,6 @@
 import numpy as np
 import cv2
-
+import matplotlib.pyplot as plt
 
 def main(record=False):
     face_c = cv2.CascadeClassifier(
@@ -9,7 +9,7 @@ def main(record=False):
     # smile_c = cv2.CascadeClassifier("classifier/haarcascade_smile.xml")
     # full_body_c = cv2.CascadeClassifier("classifier/haarcascade_fullbody.xml")
 
-    vid = cv2.VideoCapture(0)
+    vid = cv2.VideoCapture("vic1.mov")
     if record:
         fourcc = cv2.VideoWriter_fourcc(*'mov')
         out = cv2.VideoWriter('output.mov', fourcc, 20.0, (640, 480))
@@ -17,8 +17,9 @@ def main(record=False):
     if not vid.isOpened():
         print("not opened")
         input()
-
-    while(True):
+    samples = 20
+    im_data = np.empty(samples)
+    for i in range(samples):
         ret, img = vid.read()
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
@@ -32,14 +33,15 @@ def main(record=False):
             font = cv2.FONT_HERSHEY_SIMPLEX
             cv2.putText(img, 'Face', (x + w // 2, y), font,
                         0.5, (255, 255, 255), 1, cv2.LINE_AA)
+            im_data[i] = img[x+w//2,y+h//2][0]
 
-            roi_gray = gray[y:y + h, x:x + w]  # get the face
-            roi_color = img[y:y + h, x:x + w]  # get the face
+            # roi_gray = gray[y:y + h, x:x + w]  # get the face
+            # roi_color = img[y:y + h, x:x + w]  # get the face
 
             # smiles = smile_c.detectMultiScale(
             #     roi_gray)  # look for smile on face
 
-            count = 0
+            #count = 0
 
             # for (sx, sy, sw, sh) in smiles:
             #     # draw the smile box
@@ -69,7 +71,8 @@ def main(record=False):
     if record:
         out.release()
     cv2.destroyAllWindows()
-
+    plt.plot(im_data)
+    plt.show()
 
 if __name__ == "__main__":
     main()
