@@ -17,8 +17,9 @@ def main(record=False):
     if not vid.isOpened():
         print("not opened")
         input()
-    samples = 20
+    samples = 100
     im_data = np.empty(samples)
+
     for i in range(samples):
         ret, img = vid.read()
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -30,10 +31,14 @@ def main(record=False):
         for (x, y, w, h) in faces:
             # draw the rect around the face
             cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 1)
+            cv2.rectangle(img, (x, y), (x + w//4, y + h//2), (255, 0, 0), 1)
+            cv2.rectangle(img, (x, y), (x + 3*w//4, y + 3*h//4), (255, 0, 0), 1)
+            cv2.rectangle(img, (x, y), (x + 3*w//4, y + h//2), (255, 0, 0), 1)
+            cv2.rectangle(img, (x, y), (x + w//4, y + 3*h//4), (255, 0, 0), 1)
             font = cv2.FONT_HERSHEY_SIMPLEX
             cv2.putText(img, 'Face', (x + w // 2, y), font,
                         0.5, (255, 255, 255), 1, cv2.LINE_AA)
-            im_data[i] = img[x+w//2,y+h//2][0]
+            im_data[i] = sum([img[x+w//4,y+h//2][0],img[x+3*w//4,y+3*h//4][0],img[x+w//4,y+3*h//4][0],img[x+3*w//4,y+h//2][0]])
 
             # roi_gray = gray[y:y + h, x:x + w]  # get the face
             # roi_color = img[y:y + h, x:x + w]  # get the face
