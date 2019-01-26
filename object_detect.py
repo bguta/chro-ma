@@ -71,6 +71,9 @@ def main(record=False):
     if record:
         out.release()
     cv2.destroyAllWindows()
+    fft_data = np.fft.fft(im_data)
+    plt.plot(fft_data)
+    plt.show()
     plt.plot(im_data)
     plt.show()
 
