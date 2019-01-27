@@ -108,11 +108,11 @@ def main():
     print("\n\nRed max freq is {} bpm\n".format(rrange[ri]))
     print("Green max freq is {} bpm\n".format(rrange[gi]))
     print("Blue max freq is {} bpm\n".format(rrange[bi]))
-    print("Average max freq is {} bpm\n".format((rrange[ri]+rrange[bi]+rrange[bi])/3)
+    print("Average max freq is {} bpm\n".format((rrange[ri]+rrange[bi]+rrange[bi])/3))
 
-    plt.plot(rrange, fftr[:])
-    plt.plot(grange, fftg[:])
-    plt.plot(brange, fftb[:])
+    plt.plot(rrange, fftr)
+    plt.plot(grange, fftg)
+    plt.plot(brange, fftb)
     plt.plot(np.arange(0, len(fftr)) * 30 * 60 / (2 * len(fftr)), fftr[:] + fftg[:] + fftb[:])
 
     plt.show()
