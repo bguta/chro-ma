@@ -1,5 +1,9 @@
-os.system
-os.spawn*
+import os
+import subprocess
+# os.system
+# os.spawn*
+
 
 def callMatlab():
-	subprocess.run("reproduce_results.bat")
+    subprocess.call("heartrate/reproduce_results.bat")
+    # subprocess.run("heartrate/reproduce_results.bat")

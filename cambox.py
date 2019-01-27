@@ -1,10 +1,17 @@
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+import callMatlab as mat
+import glob
+
+import os
+import subprocess
 
 
 def main():
-    vid = cv2.VideoCapture('face.avi')
+    subprocess.call("reproduce_results.bat")
+    f = glob.glob("Results/*.avi")[0]
+    vid = cv2.VideoCapture(f)
 
     x, y, w, h = 200, 100, 16, 16
 
