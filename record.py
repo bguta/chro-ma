@@ -9,7 +9,7 @@ def rec():
     vid = cv2.VideoCapture(0)
 
     x, y, w, h = 200, 100, 16, 16
-    samples = 1500
+    samples = 200
 
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
