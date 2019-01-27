@@ -1,6 +1,7 @@
 import numpy as np
 import cv2
 import matplotlib.pyplot as plt
+import write_to_mathematica
 
 def main(record=False):
     face_c = cv2.CascadeClassifier(
@@ -90,8 +91,6 @@ def main(record=False):
     if record:
         out.release()
     cv2.destroyAllWindows()
-    plt.plot(im_data)
-    plt.show()
-    print(im_data)
+    write_to_mathematica.write(im_data)
 if __name__ == "__main__":
     main()
