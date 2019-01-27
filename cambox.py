@@ -87,21 +87,28 @@ def main():
     plt.plot(np.arange(len(avg_g)), avg_g, color="g")
     plt.plot(np.arange(len(avg_b)), avg_b, color="b")
     plt.show()
+
+
     fftr = np.abs(np.fft.rfft(avg_r))
     fftg = np.abs(np.fft.rfft(avg_g))
     fftb = np.abs(np.fft.rfft(avg_b))
 
-    # ri = npmax(fftr[:])
-    # gi = npmax(fftg[:])
-    # bi = npmax(fftb[:])
 
     rrange = np.arange(0, len(fftr)) * 30 * 60 / (2 * len(fftr))
     grange = np.arange(0, len(fftg)) * 30 * 60 / (2 * len(fftg))
     brange = np.arange(0, len(fftb)) * 30 * 60 / (2 * len(fftb))
 
-    # print("\n\nRed max freq is {} bpm\n".format(rrange[ri]))
-    # print("Green max freq is {} bpm\n".format(rrange[gi]))
-    # print("Blue max freq is {} bpm\n".format(rrange[bi]))
+    minf = rrange.index(40)
+    maxf = rrange.index(120)
+
+    ri = npmax(fftr[minf:maxf]) + minf
+    gi = npmax(fftg[minf:maxf]) + minf
+    bi = npmax(fftb[minf:maxf]) + minf
+
+    print("\n\nRed max freq is {} bpm\n".format(rrange[ri]))
+    print("Green max freq is {} bpm\n".format(rrange[gi]))
+    print("Blue max freq is {} bpm\n".format(rrange[bi]))
+    print("Average max freq is {} bpm\n".format((rrange[ri]+rrange[bi]+rrange[bi])/3)
 
     plt.plot(rrange, fftr[:])
     plt.plot(grange, fftg[:])
