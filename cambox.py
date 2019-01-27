@@ -8,7 +8,7 @@ def main():
 
     x, y, w, h = 200, 100, 16, 16
 
-    samples = 50
+    samples = 100
     avg_r = np.zeros(samples)
     avg_g = np.zeros(samples)
     avg_b = np.zeros(samples)

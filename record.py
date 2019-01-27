@@ -23,6 +23,8 @@ def main():
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
 
+    delay(500)
+
     print("Starting ... ")
     out = cv2.VideoWriter(filename, fourcc, 30.0, (640, 480))
     for i in range(samples):
