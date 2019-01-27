@@ -65,7 +65,7 @@ rem %f%  %inFile% %RDIR% 600 motion 100 120 100 ideal 0 10
 set inFile=%SDIR%/output.avi
 rem call:printFun
 
-%f%  %inFile% %RDIR% 30 color 50/60 60/60 50 ideal 1 4
+%f%  %inFile% %RDIR% 30 color 40/60 120/60 50 ideal 1 4
 
 rem ::------------------------------------------------------------
 rem ::face2.mp4, with butterworth motion filter and color

@@ -28,19 +28,29 @@ def printProgressBar(iteration, total, prefix='', suffix='', decimals=1, length=
 def rec():
     filename = 'data/output.avi'
     vid = cv2.VideoCapture(0)
+    face_c = cv2.CascadeClassifier(
+        "classifier/haarcascade_frontalface_default.xml")
 
-    x, y, w, h = 200, 100, 16, 16
-    samples = 250
+    # x, y, w, h = 312, 90, 16, 16
+    samples = 800
 
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
     ready = False
 
+    recs = []
+
     print("Waiting ...")
     print("Enter q to start")
     while not ready:
         ret, img = vid.read()
-        cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 1)
+
+        # cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 1)
+
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces = face_c.detectMultiScale(gray, 1.3, 5)
+        for (x, y, w, h) in faces:
+            cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 1)
         cv2.imshow('vid', img)
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -48,13 +58,21 @@ def rec():
     print("Starting ... ")
     out = cv2.VideoWriter(filename, fourcc, 30.0, (640, 480))
     for i in range(samples + 15):
-        printProgressBar(i, samples+15, prefix='Progress:', suffix='Complete', length=50)
+        printProgressBar(i, samples + 14, prefix='Progress:', suffix='Complete', length=50)
 
         ret, img = vid.read()
         if (i > 15):
             out.write(img)
 
-        cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 1)
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        faces = face_c.detectMultiScale(gray, 1.3, 5)
+        if(i > 15):
+            recs.append(faces[0])
+
+        for (x, y, w, h) in faces:
+            cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 1)
+
+        # cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 0), 1)
 
         cv2.imshow('vid', img)
 
@@ -64,6 +82,8 @@ def rec():
 
     vid.release()
     cv2.destroyAllWindows()
+
+    return recs
 
 
 if __name__ == "__main__":

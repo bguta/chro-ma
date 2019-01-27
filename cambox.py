@@ -38,14 +38,16 @@ def npmax(l):
 
 
 def main():
-    record.rec()
-    subprocess.call("reproduce_results.bat")
+    face_c = cv2.CascadeClassifier(
+        "classifier/haarcascade_frontalface_default.xml")
+    recs = record.rec()
+    subprocess.call("reproduce_results.bat", stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL)
     f = glob.glob("Results/*.avi")[0]
     vid = cv2.VideoCapture(f)
 
-    x, y, w, h = 200, 100, 16, 16
+    # x, y, w, h = 312, 90, 16, 16
 
-    samples = 200
+    samples = 750
     avg_r = np.zeros(samples)
     avg_g = np.zeros(samples)
     avg_b = np.zeros(samples)
@@ -69,10 +71,12 @@ def main():
         ret, img = vid.read()
         blur = cv2.GaussianBlur(img, (7, 7), 0, 0)
 
+        x, y, h, w = recs[i]
+
         face_r, face_g, face_b = blur[y:(y + h), x:(x + w), 0], blur[y:(y + h), x:(x + w), 1], blur[y:(y + h), x:(x + w), 2]
         avg_r[i], avg_g[i], avg_b[i] = np.sum(face_r) / (w * h), np.sum(face_g) / (w * h), np.sum(face_b) / (w * h)
         cv2.rectangle(blur, (x, y), (x + w, y + h), (255, 0, 0), 1)
-        printProgressBar(i, samples, prefix='Progress:', suffix='Complete', length=50)
+        printProgressBar(i, samples - 1, prefix='Progress:', suffix='Complete', length=50)
 
         cv2.imshow('vid', blur)
 
@@ -92,9 +96,9 @@ def main():
     fftg = np.abs(np.fft.rfft(avg_g))
     fftb = np.abs(np.fft.rfft(avg_b))
 
-    rrange = np.arange(0, len(fftr)) * 30 * 60 / (2 * len(fftr))
-    grange = np.arange(0, len(fftg)) * 30 * 60 / (2 * len(fftg))
-    brange = np.arange(0, len(fftb)) * 30 * 60 / (2 * len(fftb))
+    rrange = np.arange(0, len(fftr)) * 30 * 30 / len(fftr)
+    grange = np.arange(0, len(fftg)) * 30 * 30 / len(fftg)
+    brange = np.arange(0, len(fftb)) * 30 * 30 / len(fftb)
 
     minf = np.where(rrange - 40 > 0)[0][0]
     maxf = np.where(rrange > 120)[0][0]
@@ -111,7 +115,7 @@ def main():
     plt.plot(rrange, fftr)
     plt.plot(grange, fftg)
     plt.plot(brange, fftb)
-    plt.plot(np.arange(0, len(fftr)) * 30 * 60 / (2 * len(fftr)), fftr[:] + fftg[:] + fftb[:])
+    plt.plot(np.arange(0, len(fftr)) * 30 * 30 / len(fftr), fftr[:] + fftg[:] + fftb[:])
 
     plt.show()
 
