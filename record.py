@@ -4,8 +4,7 @@ import matplotlib.pyplot as plt
 import time
 
 
-def main():
-
+def rec():
     filename = 'data/output.avi'
     vid = cv2.VideoCapture(0)
 
@@ -44,4 +43,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    rec()
