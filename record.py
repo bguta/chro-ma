@@ -30,7 +30,7 @@ def rec():
     vid = cv2.VideoCapture(0)
 
     x, y, w, h = 200, 100, 16, 16
-    samples = 1500
+    samples = 250
 
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
 
@@ -60,6 +60,7 @@ def rec():
 
         if cv2.waitKey(1) & 0xFF == ord('q'):
             break
+    print("Done ... ")
 
     vid.release()
     cv2.destroyAllWindows()

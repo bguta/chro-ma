@@ -88,18 +88,16 @@ def main():
     plt.plot(np.arange(len(avg_b)), avg_b, color="b")
     plt.show()
 
-
     fftr = np.abs(np.fft.rfft(avg_r))
     fftg = np.abs(np.fft.rfft(avg_g))
     fftb = np.abs(np.fft.rfft(avg_b))
-
 
     rrange = np.arange(0, len(fftr)) * 30 * 60 / (2 * len(fftr))
     grange = np.arange(0, len(fftg)) * 30 * 60 / (2 * len(fftg))
     brange = np.arange(0, len(fftb)) * 30 * 60 / (2 * len(fftb))
 
-    minf = rrange.index(40)
-    maxf = rrange.index(120)
+    minf = np.where(rrange - 40 > 0)[0][0]
+    maxf = np.where(rrange > 120)[0][0]
 
     ri = npmax(fftr[minf:maxf]) + minf
     gi = npmax(fftg[minf:maxf]) + minf
@@ -108,7 +106,7 @@ def main():
     print("\n\nRed max freq is {} bpm\n".format(rrange[ri]))
     print("Green max freq is {} bpm\n".format(rrange[gi]))
     print("Blue max freq is {} bpm\n".format(rrange[bi]))
-    print("Average max freq is {} bpm\n".format((rrange[ri]+rrange[bi]+rrange[bi])/3))
+    print("Average max freq is {} bpm\n".format((rrange[ri] + rrange[bi] + rrange[bi]) / 3))
 
     plt.plot(rrange, fftr)
     plt.plot(grange, fftg)

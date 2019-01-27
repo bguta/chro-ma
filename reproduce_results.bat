@@ -63,7 +63,7 @@ rem %f%  %inFile% %RDIR% 600 motion 100 120 100 ideal 0 10
 ::------------------------------------------------------------
 :: face.mp4, with ideal color filter
 set inFile=%SDIR%/output.avi
-call:printFun
+rem call:printFun
 
 %f%  %inFile% %RDIR% 30 color 50/60 60/60 50 ideal 1 4
 
